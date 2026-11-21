@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: routecraft-backend
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_URL_UNPOOLED
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://routecraft-planner.netlify.app,https://*.vercel.app,https://*.netlify.app
+      - key: REDIS_HEALTH_ENABLED
+        value: "false"

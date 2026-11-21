@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/api/tripapi.ts","./src/components/budgetbreakdownbar.tsx","./src/components/daytimeline.tsx","./src/components/generationstepper.tsx","./src/components/interactivemap.tsx","./src/components/tripinputform.tsx","./src/hooks/usetripstream.ts","./src/types/trip.ts","./src/utils/polyline.ts"],"version":"5.7.3"}

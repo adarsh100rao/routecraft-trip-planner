@@ -1,0 +1,23 @@
+# Java / Maven
+backend/target/
+*.class
+*.jar
+*.log
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+# Secrets / Env / Deploy state
+.env
+.env.*
+.netlify/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.iml
+.neon
+node_modules/
