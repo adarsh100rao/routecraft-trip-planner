@@ -41,7 +41,7 @@ tripengine:
     grid-size-degrees: 0.08
     ttl-days: 7
     default-search-radius-meters: 15000
-    expanded-search-radius-meters: 30000
+    expanded-search-radius-meters: 45000
   external:
     nominatim-base-url: https://nominatim.openstreetmap.org
     overpass-base-url: https://overpass-api.de/api/interpreter

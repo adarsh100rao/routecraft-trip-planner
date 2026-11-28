@@ -41,6 +41,15 @@ public class TripController {
         return sseJobRegistry.attachEmitter(jobId);
     }
 
+    @GetMapping("/jobs/{jobId}")
+    public SseJobRegistry.JobStatus getJobStatus(@PathVariable String jobId) {
+        SseJobRegistry.JobStatus status = sseJobRegistry.getJobStatus(jobId);
+        if (status == null) {
+            throw new java.util.NoSuchElementException("Job not found: " + jobId);
+        }
+        return status;
+    }
+
     @GetMapping("/{tripId}")
     public TripResponse getTrip(@PathVariable UUID tripId) {
         return orchestrator.getTrip(tripId);

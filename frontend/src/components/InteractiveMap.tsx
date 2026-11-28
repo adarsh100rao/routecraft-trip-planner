@@ -7,7 +7,7 @@ import { decodePolyline } from '../utils/polyline';
 
 type MapTheme = 'streets' | 'terrain' | 'vector3d' | 'satellite';
 
-const DAY_COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#06b6d4', '#8b5cf6', '#ef4444'];
+const DAY_COLORS = ['#FF6B4A', '#FFB547', '#38bdf8', '#f472b6', '#34d399', '#a78bfa', '#fb7185'];
 
 function rasterStyle(tileUrl: string, attribution: string, overlayUrl?: string): StyleSpecification {
   const sources: StyleSpecification['sources'] = {
@@ -224,7 +224,7 @@ export function InteractiveMap({
     activeDayPlan.stops.forEach((stop, idx) => {
       const isFood =
         stop.slotType === 'LUNCH' || stop.slotType === 'DINNER' || stop.slotType === 'CAFE';
-      const pinColor = isFood ? '#f59e0b' : dayColor;
+      const pinColor = isFood ? '#FFB547' : dayColor;
 
       const wrapper = document.createElement('div');
       wrapper.className = 'group cursor-pointer';
@@ -233,9 +233,9 @@ export function InteractiveMap({
       const pill = document.createElement('div');
       pill.style.cssText = `
         display:flex;align-items:center;gap:5px;padding:4px 9px 4px 5px;
-        border-radius:9999px;background:#0f172a;color:#ffffff;
+        border-radius:9999px;background:#131C2E;color:#F1F5F9;
         border:2px solid ${pinColor};
-        box-shadow:0 6px 16px rgba(0,0,0,0.4);
+        box-shadow:0 6px 16px rgba(0,0,0,0.45);
         transition:transform 160ms ease, box-shadow 160ms ease;
         white-space:nowrap;font-size:11px;font-weight:600;
       `;
@@ -244,7 +244,7 @@ export function InteractiveMap({
       badge.textContent = String(idx + 1);
       badge.style.cssText = `
         width:20px;height:20px;border-radius:9999px;background:${pinColor};
-        color:#ffffff;display:flex;align-items:center;justify-content:center;
+        color:#1A0F0A;display:flex;align-items:center;justify-content:center;
         font-size:11px;font-weight:700;flex-shrink:0;
       `;
 
@@ -284,8 +284,8 @@ export function InteractiveMap({
       const active = stopId === hoveredStopId;
       el.style.transform = active ? 'scale(1.14)' : 'scale(1)';
       el.style.boxShadow = active
-        ? '0 0 0 4px rgba(99, 102, 241, 0.45), 0 10px 24px rgba(0,0,0,0.55)'
-        : '0 6px 16px rgba(0,0,0,0.4)';
+        ? '0 0 0 4px rgba(255, 107, 74, 0.45), 0 10px 24px rgba(0,0,0,0.55)'
+        : '0 6px 16px rgba(0,0,0,0.45)';
       marker.getElement().style.zIndex = active ? '40' : '10';
     });
   }, [hoveredStopId]);
@@ -303,13 +303,13 @@ export function InteractiveMap({
   };
 
   return (
-    <div className="relative h-full min-h-[480px] w-full overflow-hidden rounded-2xl border border-slate-800 shadow-2xl">
+    <div className="relative h-full min-h-[480px] w-full overflow-hidden rounded-2xl border border-[#24304A] shadow-2xl">
       <div ref={containerRef} className="h-full w-full" />
 
       {/* Top-Left Floating Map Style Switcher */}
-      <div className="absolute left-3 top-3 z-20 flex flex-wrap items-center gap-1.5 rounded-xl border border-slate-700/80 bg-slate-900/85 p-1 shadow-lg backdrop-blur-md">
+      <div className="absolute left-3 top-3 z-20 flex flex-wrap items-center gap-1.5 rounded-xl border border-[#24304A] bg-[#131C2E]/90 p-1 shadow-lg backdrop-blur-md">
         <span className="flex items-center gap-1 px-2 text-[11px] font-medium text-slate-400">
-          <Layers className="h-3.5 w-3.5 text-indigo-400" />
+          <Layers className="h-3.5 w-3.5 text-[#FF6B4A]" />
         </span>
         {(
           [
@@ -327,8 +327,8 @@ export function InteractiveMap({
             }}
             className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition ${
               theme === t.id
-                ? 'bg-indigo-600 text-white shadow'
-                : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                ? 'bg-[#FF6B4A] text-[#1A0F0A] shadow'
+                : 'text-slate-300 hover:bg-[#24304A]/70 hover:text-white'
             }`}
           >
             {t.label}
@@ -342,8 +342,8 @@ export function InteractiveMap({
           onClick={() => setIs3D((v) => !v)}
           className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold shadow-lg backdrop-blur-md transition ${
             is3D
-              ? 'border-indigo-400 bg-indigo-600/90 text-white'
-              : 'border-slate-700/80 bg-slate-900/85 text-slate-200 hover:bg-slate-800'
+              ? 'border-[#FF6B4A] bg-[#FF6B4A] text-[#1A0F0A]'
+              : 'border-[#24304A] bg-[#131C2E]/90 text-slate-200 hover:bg-[#1b2740]'
           }`}
           title="Toggle 3D perspective tilt"
         >
@@ -352,7 +352,7 @@ export function InteractiveMap({
 
         <button
           onClick={handleRecenter}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-slate-700/80 bg-slate-900/85 px-3 py-2 text-xs font-semibold text-slate-200 shadow-lg backdrop-blur-md transition hover:bg-slate-800"
+          className="inline-flex items-center gap-1.5 rounded-xl border border-[#24304A] bg-[#131C2E]/90 px-3 py-2 text-xs font-semibold text-slate-200 shadow-lg backdrop-blur-md transition hover:bg-[#1b2740]"
           title="Fit all stops for this day"
         >
           <Maximize2 className="h-3.5 w-3.5" /> Fit Route
@@ -363,7 +363,7 @@ export function InteractiveMap({
             href={googleMapsDayUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-950/40 transition hover:bg-emerald-500"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FF6B4A] to-[#FFB547] px-3.5 py-2 text-xs font-bold text-[#1A0F0A] shadow-lg shadow-[#FF6B4A]/25 transition hover:from-[#FF8566] hover:to-[#FFC366]"
           >
             <ExternalLink className="h-3.5 w-3.5" /> Open in Google Maps
           </a>
@@ -372,21 +372,21 @@ export function InteractiveMap({
 
       {/* Bottom-Left Selected Stop Glassmorphic Info Card */}
       {selectedStop && (
-        <div className="absolute bottom-8 left-3 z-30 w-80 max-w-[calc(100%-1.5rem)] rounded-2xl border border-slate-700/90 bg-slate-900/95 p-4 shadow-2xl backdrop-blur-md">
+        <div className="absolute bottom-8 left-3 z-30 w-80 max-w-[calc(100%-1.5rem)] rounded-2xl border border-[#24304A] bg-[#131C2E]/95 p-4 shadow-2xl backdrop-blur-md">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-indigo-400">
+              <div className="text-[10px] font-semibold uppercase tracking-wider text-[#FF6B4A]">
                 Stop #{selectedStop.orderIndex + 1} ·{' '}
                 {selectedStop.slotType === 'ACTIVITY' ? selectedStop.category : selectedStop.slotType}
               </div>
-              <h4 className="mt-0.5 text-sm font-bold text-white">{selectedStop.name}</h4>
+              <h4 className="mt-0.5 text-sm font-bold text-slate-100">{selectedStop.name}</h4>
             </div>
             <button
               onClick={() => {
                 setSelectedStop(null);
                 onSelectStop(null);
               }}
-              className="rounded-lg p-1 text-slate-400 hover:bg-slate-800 hover:text-white"
+              className="rounded-lg p-1 text-slate-400 hover:bg-[#24304A]/70 hover:text-white"
             >
               <X className="h-4 w-4" />
             </button>
@@ -394,15 +394,15 @@ export function InteractiveMap({
 
           <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-300">
             <span className="inline-flex items-center gap-1">
-              <Clock className="h-3.5 w-3.5 text-indigo-400" />
+              <Clock className="h-3.5 w-3.5 text-[#FF6B4A]" />
               {selectedStop.startTime.slice(0, 5)} – {selectedStop.endTime.slice(0, 5)}
             </span>
-            <span className="font-semibold text-emerald-400">
+            <span className="font-semibold text-[#FFB547]">
               {symbol}
               {selectedStop.estimatedCost.toLocaleString()}
             </span>
-            <span className="inline-flex items-center gap-0.5 text-amber-300">
-              <Star className="h-3 w-3 fill-amber-300" /> {selectedStop.rating.toFixed(1)}
+            <span className="inline-flex items-center gap-0.5 text-[#FFB547]">
+              <Star className="h-3 w-3 fill-[#FFB547]" /> {selectedStop.rating.toFixed(1)}
             </span>
           </div>
 
@@ -418,7 +418,7 @@ export function InteractiveMap({
             )}+${selectedStop.lat},${selectedStop.lng}`}
             target="_blank"
             rel="noreferrer"
-            className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-400 hover:text-indigo-300"
+            className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#FF6B4A] hover:text-[#FF8566]"
           >
             <ExternalLink className="h-3.5 w-3.5" /> View Place & Reviews on Google Maps
           </a>

@@ -36,7 +36,7 @@ public class GeminiCuratedPoiClient {
 
     private static final Logger log = LoggerFactory.getLogger(GeminiCuratedPoiClient.class);
     private static final GeometryFactory GF = new GeometryFactory(new PrecisionModel(), 4326);
-    private static final double MAX_DISTANCE_FROM_CENTER_KM = 28.0;
+    private static final double MAX_DISTANCE_FROM_CENTER_KM = 45.0;
 
     private final RestClient externalRestClient;
     private final RestClient fastRestClient;

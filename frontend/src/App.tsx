@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Compass, Loader2 } from 'lucide-react';
+import { ArrowLeft, Compass, Loader2, Map, SlidersHorizontal, Wallet } from 'lucide-react';
 import { useTripStream } from './hooks/useTripStream';
 import { TripInputForm } from './components/TripInputForm';
 import { GenerationStepper } from './components/GenerationStepper';
@@ -96,16 +96,32 @@ export function App() {
     }
   };
 
+  const showLanding = !isHydrating && !trip && !isGenerating;
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <header className="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur">
+    <div className="app-sunset-bg relative min-h-screen overflow-x-clip text-slate-100">
+      {/* Soothing India Gate twilight backdrop on the landing screen */}
+      {showLanding && (
+        <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
+          <img
+            src="/india-gate-hero.jpg"
+            alt=""
+            className="h-full w-full scale-[1.02] object-cover object-center opacity-30 saturate-[0.85]"
+          />
+          {/* Soft deep-navy & warm sunset shade overlays for calm, eye-friendly contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1220]/75 via-[#0B1220]/60 to-[#0B1220]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(255,107,74,0.16),transparent_60%),radial-gradient(ellipse_60%_40%_at_90%_10%,rgba(255,181,71,0.10),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_65%_at_50%_35%,transparent_10%,rgba(11,18,32,0.84)_100%)]" />
+        </div>
+      )}
+
+      <header className="relative z-10 border-b border-[#24304A]/80 bg-[#0B1220]/75 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5">
           <div className="flex items-center gap-2.5">
-            <Compass className="h-6 w-6 text-indigo-400" />
-            <span className="text-base font-bold tracking-tight text-white">RouteCraft</span>
-            <span className="rounded-full bg-indigo-500/15 px-2 py-0.5 text-[10px] font-medium text-indigo-300">
-              PostGIS + OSRM Engine
-            </span>
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#FF6B4A]/15 ring-1 ring-[#FF6B4A]/35">
+              <Compass className="h-5 w-5 text-[#FF6B4A]" />
+            </div>
+            <span className="text-base font-bold tracking-tight text-slate-100">RouteCraft</span>
           </div>
 
           {trip && (
@@ -116,7 +132,7 @@ export function App() {
                 updateUrlParams(null);
                 reset();
               }}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-slate-900"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[#24304A] bg-[#131C2E]/80 px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:border-[#FF6B4A]/50 hover:text-white"
             >
               <ArrowLeft className="h-3.5 w-3.5" /> New Trip
             </button>
@@ -124,7 +140,7 @@ export function App() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-8">
+      <main className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:py-12">
         {error && (
           <div className="mx-auto mb-6 max-w-2xl rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">
             {error}
@@ -133,19 +149,79 @@ export function App() {
 
         {isHydrating && (
           <div className="flex flex-col items-center justify-center py-24 text-sm text-slate-400">
-            <Loader2 className="mb-3 h-6 w-6 animate-spin text-indigo-400" />
+            <Loader2 className="mb-3 h-6 w-6 animate-spin text-[#FF6B4A]" />
             Restoring your saved itinerary...
           </div>
         )}
 
-        {!isHydrating && !trip && !isGenerating && (
-          <TripInputForm
-            onSubmit={(req) => {
-              setActiveDay(1);
-              generate(req);
-            }}
-            disabled={isGenerating}
-          />
+        {showLanding && (
+          <div className="mx-auto max-w-4xl">
+            {/* Hero copy */}
+            <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#FF6B4A]/30 bg-[#FF6B4A]/10 px-3.5 py-1 text-xs font-medium text-[#FFB547] backdrop-blur-sm">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#FF6B4A]" />
+                Smart Day-by-Day Travel Planner
+              </div>
+              <h1 className="text-3xl font-bold tracking-tight text-slate-100 sm:text-5xl sm:leading-[1.12]">
+                Craft your ideal trip{' '}
+                <span className="bg-gradient-to-r from-[#FF6B4A] via-[#FF8566] to-[#FFB547] bg-clip-text text-transparent">
+                  in seconds
+                </span>
+              </h1>
+              <p className="mx-auto mt-3.5 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">
+                Tell us where you&apos;re headed, your pace, and your budget. We&apos;ll map out a
+                balanced itinerary with real places, realistic travel times, and zero backtracking.
+              </p>
+            </div>
+
+            {/* Form card with subtle sunset glow behind it */}
+            <div className="relative mx-auto max-w-2xl">
+              <div
+                className="pointer-events-none absolute -inset-1 rounded-[26px] bg-gradient-to-r from-[#FF6B4A]/30 via-[#FF8566]/15 to-[#FFB547]/25 opacity-80 blur-2xl"
+                aria-hidden="true"
+              />
+              <TripInputForm
+                onSubmit={(req) => {
+                  setActiveDay(1);
+                  generate(req);
+                }}
+                disabled={isGenerating}
+              />
+            </div>
+
+            {/* Compact value pillars */}
+            <div className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-3">
+              <div className="rounded-2xl border border-[#24304A] bg-[#131C2E]/80 p-4 backdrop-blur-sm">
+                <div className="mb-2.5 flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF6B4A]/15 text-[#FF6B4A]">
+                  <Map className="h-4 w-4" />
+                </div>
+                <h3 className="text-sm font-semibold text-slate-100">Smarter Daily Routes</h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                  Nearby attractions and dining are grouped together so you spend less time in transit.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-[#24304A] bg-[#131C2E]/80 p-4 backdrop-blur-sm">
+                <div className="mb-2.5 flex h-9 w-9 items-center justify-center rounded-xl bg-[#FFB547]/15 text-[#FFB547]">
+                  <Wallet className="h-4 w-4" />
+                </div>
+                <h3 className="text-sm font-semibold text-slate-100">Built Around Your Budget</h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                  Every stop and meal is matched to your spending limit, from street food to fine dining.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-[#24304A] bg-[#131C2E]/80 p-4 backdrop-blur-sm">
+                <div className="mb-2.5 flex h-9 w-9 items-center justify-center rounded-xl bg-[#FF8566]/15 text-[#FF8566]">
+                  <SlidersHorizontal className="h-4 w-4" />
+                </div>
+                <h3 className="text-sm font-semibold text-slate-100">Flexible On The Fly</h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                  Lock your favorite stops, remove anything you don&apos;t want, and refresh a day in one click.
+                </p>
+              </div>
+            </div>
+          </div>
         )}
 
         {isGenerating && <GenerationStepper stages={stages} progress={progress} />}
@@ -154,7 +230,7 @@ export function App() {
           <div className="space-y-5">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-white">{trip.destination}</h1>
+                <h1 className="text-2xl font-bold text-slate-100">{trip.destination}</h1>
                 <p className="text-xs text-slate-400">
                   {trip.days} Days · {trip.peopleCount}{' '}
                   {trip.peopleCount === 1 ? 'Traveler' : 'Travelers'} · {trip.pace} Pace
@@ -168,8 +244,8 @@ export function App() {
                     onClick={() => setActiveDay(d.dayNumber)}
                     className={`rounded-lg px-3.5 py-1.5 text-xs font-semibold transition ${
                       activeDayPlan.dayNumber === d.dayNumber
-                        ? 'bg-indigo-600 text-white shadow'
-                        : 'border border-slate-800 bg-slate-900 text-slate-400 hover:text-white'
+                        ? 'bg-[#FF6B4A] text-[#1A0F0A] shadow shadow-[#FF6B4A]/25'
+                        : 'border border-[#24304A] bg-[#131C2E] text-slate-400 hover:border-[#FF6B4A]/40 hover:text-slate-100'
                     }`}
                   >
                     Day {d.dayNumber}

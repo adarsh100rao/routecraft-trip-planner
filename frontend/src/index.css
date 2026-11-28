@@ -1,10 +1,21 @@
 @import "tailwindcss";
 @import "maplibre-gl/dist/maplibre-gl.css";
 
+html {
+  color-scheme: dark;
+}
+
+.app-sunset-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 107, 74, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(255, 181, 71, 0.10), transparent 60%),
+    #0B1220;
+}
+
 .maplibregl-ctrl-group {
-  background: rgba(15, 23, 42, 0.88) !important;
+  background: rgba(19, 28, 46, 0.9) !important;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(51, 65, 85, 0.8) !important;
+  border: 1px solid rgba(36, 48, 74, 0.9) !important;
   border-radius: 10px !important;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
@@ -12,7 +23,7 @@
 
 .maplibregl-ctrl-group button {
   background: transparent !important;
-  border-color: rgba(51, 65, 85, 0.6) !important;
+  border-color: rgba(36, 48, 74, 0.7) !important;
 }
 
 .maplibregl-ctrl-group button span {
@@ -20,7 +31,7 @@
 }
 
 .maplibregl-ctrl-attrib {
-  background: rgba(15, 23, 42, 0.72) !important;
+  background: rgba(11, 18, 32, 0.78) !important;
   color: #94a3b8 !important;
   font-size: 10px !important;
   border-radius: 6px 0 0 0;
